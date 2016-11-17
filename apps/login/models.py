@@ -35,9 +35,11 @@ class UserManager(models.Manager):
 
         if not request.POST['first_name']:
             errors.append('First name cannot be blank.')
-        if not EMAIL_REGEX.match(request.POST['email']):
+        if not request.POST['email']:
+            errors.append('Please enter an email.')
+        elif not EMAIL_REGEX.match(request.POST['email']):
             errors.append('Invalid email.')
-        if request.POST['password'] < 8:
+        if len(request.POST['password']) < 8:
             errors.append('Password must be at least 8 characters.')
         if request.POST['password'] != request.POST['confirm']:
             errors.append('Password and password confirm must match.')

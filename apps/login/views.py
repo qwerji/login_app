@@ -10,8 +10,8 @@ def session_check(request):
 
 def index(request):
     if session_check(request):
-        # VV REDIRECT TO APP VV
-        return redirect('success')
+        return redirect('login:success')
+        # ^^ REDIRECT TO APP ^^
     else:
         return render(request,'login/index.html')
 
@@ -24,7 +24,7 @@ def login_reg(request):
 
     if result[0] == False:
         print_errors(request, result[1])
-        return redirect('index')
+        return redirect('login:index')
 
     return log_user_in(request, result[1])
 
@@ -38,13 +38,13 @@ def log_user_in(request, user):
         'first_name': user.first_name
     }
 
-    # VV REDIRECT TO APP VV
-    return redirect('success')
+    return redirect('login:success')
+    # ^^ REDIRECT TO APP ^^
 
 def logout(request):
     request.session.clear()
 
-    return redirect('index')
+    return redirect('login:index')
 
 def success(request):
     return render(request, 'login/success.html')
